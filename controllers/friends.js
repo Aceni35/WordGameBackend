@@ -48,7 +48,7 @@ const addFriend = (socket) =>
         { type: "friend-request", from: username, isAccepted: "no-answer" },
         ...user.notifications,
       ];
-      const updateUser = await User.findOneAndUpdate(
+      await User.findOneAndUpdate(
         { username: friend },
         { notifications: newNots },
         { new: true }
@@ -101,7 +101,7 @@ const acceptFriend = (socket, id) =>
       user2.friends = newFriends2;
       await user2.save();
       changeNots(newFriends2);
-      socket.to(name).emit("got-accepted", name);
+      socket.to(name).emit("got-accepted", name, id);
     } catch (error) {
       console.log(error);
     }

@@ -21,16 +21,14 @@ const getHomepage = async (req, res) => {
 
   const OnlineUsers = await User.find({ online: true });
   const onlineFriends = OnlineUsers.filter((u) => {
-    let areFriends = false;
-    let test = friends.map((f) => {
-      if (f.username === u.username) {
-        areFriends = true;
-      }
-    });
-    if (areFriends === true) {
-      return u.username;
-    }
-  });
+    return friends.some((f) => f.username === u.username);
+  }).map((u) => ({
+    username: u.username,
+    id: u.id,
+    online: u.online,
+  }));
+  console.log(onlineFriends);
+
   res.status(200).json({
     username,
     wins,

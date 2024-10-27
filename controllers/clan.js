@@ -102,7 +102,7 @@ const joinClan = (socket, id) =>
         { type: "clan-request", from: id, isAccepted: "no-answer" },
         ...owner.notifications,
       ];
-      socket.to(clanOwner.usr_name).emit("clan-request");
+      socket.to(clanOwner.usr_name).emit("clan-request", id);
       cb("info", "request to join has been sent");
       await owner.save();
       return;
